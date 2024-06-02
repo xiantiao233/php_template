@@ -7,8 +7,9 @@ function config_2c17c6393771ee3048ae34d6b380c5ec(): array
         'info' => [
             'APIName' => 'templateAPI',
             'APIVersion' => 'alpha-0.0.1',
-            'APIServerURL' => 'http://localhost/template/',
+            'APIServerURL' => 'http://localhost/template/public',
             "returnHeader" => [
+                # 跨域请求
                 "Access-Control-Allow-Origin" => [
                     'http://localhost',
                     'https://yghpy.com'
@@ -16,15 +17,34 @@ function config_2c17c6393771ee3048ae34d6b380c5ec(): array
             ]
         ],
         'security' => [
-            'reverseProxySupport' => true,
-            'ipWhitelist' => 'reverse:false,list'
+            # 反向代理设置
+            'reverseProxySupport' => [
+                'enable' => false,
+                # 可以传递ip信息的白名单
+                'ipWhitelist' => [
+                    # 反转为黑名单
+                    'reverse' => false,
+                    'list' => [
+                        '192.168.0.1',
+                        '192.168.0.2'
+                    ]
+                ]
+            ]
         ],
         'database' => [
             'redis' => [
                 'host' => 'localhost',
                 'port' => 6379,
-                'password' => '123456',
+                'password' => '',
+                # 储存key时额外添加的redis的key头
                 'storeKeyHeader' => 'rkzyo.'
+            ],
+            'mysql' => [
+                'host' => 'localhost',
+                'port' => 3306,
+                'user' => 'root',
+                'password' => '123456',
+                'database' => 'template_api'
             ]
         ]
     ];

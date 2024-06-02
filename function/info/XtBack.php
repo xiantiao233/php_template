@@ -2,8 +2,12 @@
 
 use JetBrains\PhpStorm\NoReturn;
 
-#[NoReturn] function xtSBack($status = null) : void
+#[NoReturn] function xtSBack(Status|int|string $status = null,Exception $e = null) : void
 {
+    if ($e!==null && getConfig('debug')) {
+        die($e->getMessage().'<br>'.$e->getTraceAsString());
+    }
+
     header('Content-Type: application/json');
     if ($status == null) {
         die(json_encode([
@@ -14,10 +18,15 @@ use JetBrains\PhpStorm\NoReturn;
         die(json_encode([
             'code' => $status->getCode(),
             'message' => $status->getMessage(),
-            'cookies' => $status->getCookies()
+            'dataArray' => $status->getDataArray()
         ]));
+    } elseif (is_int($status)) {
+        die(json_encode([
+            'code' => $status,
+            'message' => getErrorMsg($status)
+        ]));
+    } else {
+        http_response_code(500);
+        die($status);
     }
-    die(json_encode([
-        'code' => $status
-    ]));
 }

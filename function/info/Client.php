@@ -2,10 +2,25 @@
 class Client {
     private string $clientIP;
     public function __construct() {
-        if (!getConfig('security.reverseProxySupport')) {
+        if (!getConfig('security.reverseProxySupport.enable')) {
             $this->clientIP = $_SERVER['REMOTE_ADDR'];
             return;
-        }$ip = '';
+        }
+
+        $ipWhitelist = getConfig('security.reverseProxySupport.ipWhitelist.list','array');
+        $ipWhitelist_reverse = getConfig('security.reverseProxySupport.ipWhitelist.reverse','bool');
+        if (!in_array($_SERVER['REMOTE_ADDR'],$ipWhitelist) && !$ipWhitelist_reverse) {
+            http_response_code(403);
+            echo 'your ip not can use reverseProxySupport header';
+            exit();
+        }
+        if (in_array($_SERVER['REMOTE_ADDR'],$ipWhitelist) && $ipWhitelist_reverse) {
+            http_response_code(403);
+            echo 'your ip not can use reverseProxySupport header - reverse';
+            exit();
+        }
+
+        $ip = '';
         // 检查是否存在 HTTP_CLIENT_IP
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $ip = $_SERVER['HTTP_CLIENT_IP'];
