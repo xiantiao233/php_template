@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../../config.php';
 class Client {
     private string $clientIP;
     public function __construct() {

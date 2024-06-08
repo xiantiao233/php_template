@@ -1,5 +1,4 @@
 <?php
-
 class Status
 {
     var int $code = 0;

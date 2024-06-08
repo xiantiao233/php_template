@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../errorCode.php';
+require_once __DIR__ . '/database/Rediser.php';
+
 function accessRestrictions(string $key, int $time, int $frequency, bool $info = false): bool|null
 {
     $Redis = new Rediser();

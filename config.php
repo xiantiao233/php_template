@@ -16,6 +16,15 @@ function config_2c17c6393771ee3048ae34d6b380c5ec(): array
                 ]
             ]
         ],
+        'jwt' => [
+            # 密钥 (至少256位，且定期更换)
+            'secret' => '5cae6fb206936d25068fc0a147197efda828726c2af562266e0e037639b8faf55f5cb7bd8cac35fa87030b88f612ab88dfa1bcd8de3f25e3567abd61545585c9',
+            # 散列算法 可选的 https://www.php.net/manual/zh/function.hash-hmac-algos.php
+            'algo' => 'sha256'
+        ],
+        'access_token' => [
+            'periodValidity' => 3600
+        ],
         'security' => [
             # 反向代理设置
             'reverseProxySupport' => [

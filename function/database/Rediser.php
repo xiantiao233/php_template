@@ -1,5 +1,6 @@
 <?php
-
+require_once __DIR__ . '/../../config.php';
+require_once __DIR__ . '/../info/XtBack.php';
 class Rediser
 {
     private Redis $redis;

@@ -1,7 +1,7 @@
 <?php
+require_once __DIR__ . '/../../config.php';
 
 use JetBrains\PhpStorm\NoReturn;
-
 #[NoReturn] function xtSBack(Status|int|string $status = null,Exception $e = null) : void
 {
     if ($e!==null && getConfig('debug')) {
