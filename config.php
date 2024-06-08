@@ -9,7 +9,7 @@ function config_2c17c6393771ee3048ae34d6b380c5ec(): array
             'APIVersion' => 'alpha-0.0.1',
             'APIServerURL' => 'http://localhost/template/public',
             "returnHeader" => [
-                # 跨域请求
+                # 允许的跨域请求
                 "Access-Control-Allow-Origin" => [
                     'http://localhost',
                     'https://yghpy.com'
@@ -22,7 +22,17 @@ function config_2c17c6393771ee3048ae34d6b380c5ec(): array
             # 散列算法 可选的 https://www.php.net/manual/zh/function.hash-hmac-algos.php
             'algo' => 'sha256'
         ],
+        # 访问速率限制
+        # 1/60 代表每60s至多1次 使用'-'分割以配置多个
+        'accessRestrictions' => [
+            # 邮件发送限制
+            'sendMail' => [
+                'qq' => '3/600-8/3600',
+                'ip' => ''
+            ]
+        ],
         'access_token' => [
+            # 登入有效期
             'periodValidity' => 3600
         ],
         'security' => [
@@ -33,13 +43,11 @@ function config_2c17c6393771ee3048ae34d6b380c5ec(): array
                 'ipWhitelist' => [
                     # 反转为黑名单
                     'reverse' => false,
-                    'list' => [
-                        '192.168.0.1',
-                        '192.168.0.2'
-                    ]
+                    'list' => ['127.0.0.1']
                 ]
             ]
         ],
+        # 数据库配置
         'database' => [
             'redis' => [
                 'host' => 'localhost',
